@@ -81,10 +81,10 @@ for (const file of files) {
     for (let line of lines) {
         if (line.trim().startsWith('INSERT INTO')) {
             // Replace empty backticks with "TableName"
-            line = line.replace(/INSERT INTO \`\`/, \`INSERT INTO "\${tableName}"\`);
+            line = line.replace(/INSERT INTO ``/, `INSERT INTO "${tableName}"`);
             
             // Replace all other backticks with double quotes for PostgreSQL identifiers
-            line = line.replace(/\`/g, '"');
+            line = line.replace(/`/g, '"');
             
             // In PostgreSQL, string escapes with \' work in some contexts, but standard is '' 
             // We'll leave it as is for now since pg usually handles standard inserts if standard_conforming_strings is off or it's standard syntax.

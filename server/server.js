@@ -13,10 +13,10 @@ app.use('/images', express.static(path.join(__dirname, '../src/valam_images')));
 app.use('/combo_images', express.static(path.join(__dirname, '../src/valam_combo_offer_images')));
 
 // Creating PostgreSQL Connection using Pool
-// Ensure you have POSTGRES_URL in your Vercel Environment Variables
+// Ensure you have POSTGRES_URL or DATABASE_URL in your Vercel Environment Variables
 const db = new Pool({
-    connectionString: process.env.POSTGRES_URL || "postgres://default:default@localhost:5432/valam_db",
-    ssl: process.env.POSTGRES_URL ? { rejectUnauthorized: false } : false // Required for Vercel Postgres
+    connectionString: process.env.POSTGRES_URL || process.env.DATABASE_URL || "postgres://default:default@localhost:5432/valam_db",
+    ssl: (process.env.POSTGRES_URL || process.env.DATABASE_URL) ? { rejectUnauthorized: false } : false // Required for Cloud Postgres
 });
 
 db.connect((err) => {
