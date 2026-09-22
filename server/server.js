@@ -4,18 +4,14 @@ const { Pool } = pg;
 import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());                        // Allows integrating React
 app.use(express.json({ limit: '50mb' })); // Reading JSON data from React (increased limit for images)
 
 // Serve images statically
-app.use('/images', express.static(path.join(__dirname, '../src/valam_images')));
-app.use('/combo_images', express.static(path.join(__dirname, '../src/valam_combo_offer_images')));
+app.use('/images', express.static(path.join(process.cwd(), 'src/valam_images')));
+app.use('/combo_images', express.static(path.join(process.cwd(), 'src/valam_combo_offer_images')));
 
 // Creating PostgreSQL Connection using Pool
 // Ensure you have POSTGRES_URL or DATABASE_URL in your Vercel Environment Variables
@@ -309,7 +305,7 @@ function saveImage(base64Data, originalName, folderName = 'valam_images') {
     if (!base64Data) return null;
 
     try {
-        const uploadDir = path.join(__dirname, '../src', folderName);
+        const uploadDir = path.join(process.cwd(), 'src', folderName);
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
         }
@@ -441,8 +437,8 @@ app.get('/api/products', (req, res) => {
     });
 });
 
-// Starting the server
-if (process.argv[1] === __filename) {
+// Starting the server locally (Vercel will ignore this)
+if (process.env.NODE_ENV !== 'production') {
     app.listen(5000, () => {
         console.log("Server is running on port 5000 🚀");
     });
