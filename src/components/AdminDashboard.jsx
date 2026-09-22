@@ -28,7 +28,7 @@ const OrderItemsCell = ({ itemsString, orderId, onUpdate, readOnly }) => {
 
     setIsUpdating(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/orders/${orderId}/items`, {
+      const response = await fetch(`https://server-seven-eta-56.vercel.app/api/orders/${orderId}/items`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items: updatedItems })
@@ -380,7 +380,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/api/orders');
+      const response = await fetch('https://server-seven-eta-56.vercel.app/api/orders');
       if (!response.ok) {
         throw new Error('Failed to fetch orders');
       }
@@ -396,7 +396,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
   const fetchSubscribers = async () => {
     try {
       setSubscribersLoading(true);
-      const response = await fetch('http://localhost:5000/api/subscribers');
+      const response = await fetch('https://server-seven-eta-56.vercel.app/api/subscribers');
       if (!response.ok) {
         throw new Error('Failed to fetch subscribers');
       }
@@ -412,7 +412,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
   const fetchComboOffers = async () => {
     try {
       setComboOffersLoading(true);
-      const response = await fetch('http://localhost:5000/api/combo-offers');
+      const response = await fetch('https://server-seven-eta-56.vercel.app/api/combo-offers');
       if (!response.ok) {
         throw new Error('Failed to fetch combo offers');
       }
@@ -427,7 +427,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
 
   const handleOrderSubmit = async (orderId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+      const response = await fetch(`https://server-seven-eta-56.vercel.app/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'Completed' })
@@ -447,7 +447,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
   const fetchMenus = async () => {
     try {
       setMenusLoading(true);
-      const response = await fetch('http://localhost:5000/api/menus');
+      const response = await fetch('https://server-seven-eta-56.vercel.app/api/menus');
       if (!response.ok) throw new Error('Failed to fetch menus');
       const data = await response.json();
       setMenus(data);
@@ -461,7 +461,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
   const fetchContents = async () => {
     try {
       setContentsLoading(true);
-      const response = await fetch('http://localhost:5000/api/contents');
+      const response = await fetch('https://server-seven-eta-56.vercel.app/api/contents');
       if (!response.ok) throw new Error('Failed to fetch contents');
       const data = await response.json();
       setContents(data);
@@ -493,7 +493,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
     }
 
     try {
-      const url = editingMenuId ? `http://localhost:5000/api/menus/${editingMenuId}` : 'http://localhost:5000/api/menus';
+      const url = editingMenuId ? `https://server-seven-eta-56.vercel.app/api/menus/${editingMenuId}` : 'https://server-seven-eta-56.vercel.app/api/menus';
       const method = editingMenuId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -613,7 +613,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
     }
 
     try {
-      const url = editingContentId ? `http://localhost:5000/api/contents/${editingContentId}` : 'http://localhost:5000/api/contents';
+      const url = editingContentId ? `https://server-seven-eta-56.vercel.app/api/contents/${editingContentId}` : 'https://server-seven-eta-56.vercel.app/api/contents';
       const method = editingContentId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -682,8 +682,8 @@ export default function AdminDashboard({ onLogout, adminUser }) {
 
     try {
       const url = editingComboId 
-        ? `http://localhost:5000/api/combo-offers/${editingComboId}` 
-        : 'http://localhost:5000/api/combo-offers';
+        ? `https://server-seven-eta-56.vercel.app/api/combo-offers/${editingComboId}` 
+        : 'https://server-seven-eta-56.vercel.app/api/combo-offers';
       
       const method = editingComboId ? 'PUT' : 'POST';
 
@@ -727,13 +727,13 @@ export default function AdminDashboard({ onLogout, adminUser }) {
       let successMessage = '';
       
       if (type === 'comboOffer') {
-        url = `http://localhost:5000/api/combo-offers/${id}`;
+        url = `https://server-seven-eta-56.vercel.app/api/combo-offers/${id}`;
         successMessage = "🗑️ Combo Offer has been deleted successfully!";
       } else if (type === 'menu') {
-        url = `http://localhost:5000/api/menus/${id}`;
+        url = `https://server-seven-eta-56.vercel.app/api/menus/${id}`;
         successMessage = "🗑️ Menu has been deleted successfully!";
       } else if (type === 'content') {
-        url = `http://localhost:5000/api/contents/${id}`;
+        url = `https://server-seven-eta-56.vercel.app/api/contents/${id}`;
         successMessage = "🗑️ Content has been deleted successfully!";
       }
 

@@ -443,7 +443,7 @@ app.get('/api/products', (req, res) => {
                     price: Number(row.amount || 0),
                     rating: 5.0, // Default placeholder
                     reviews: 0,
-                    image: row.image ? `http://localhost:5000/images/${row.image}` : '',
+                    image: row.image ? `${req.headers['x-forwarded-proto'] || req.protocol}://${req.get('host')}/images/${row.image}` : '',
                     description: row.content_text_english || '',
                     descriptionTa: row.content_text_tamil || '',
                     ingredientsEn: row.ingredients_text_english || '',

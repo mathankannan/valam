@@ -34,7 +34,7 @@ function App() {
   useEffect(() => {
     const fetchComboStatus = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/combo-offers');
+        const response = await fetch('https://server-seven-eta-56.vercel.app/api/combo-offers');
         if (response.ok) {
           const data = await response.json();
           setHasComboOffers(data && data.length > 0);
@@ -50,7 +50,7 @@ function App() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/products');
+        const response = await fetch('https://server-seven-eta-56.vercel.app/api/products');
         if (response.ok) {
           const data = await response.json();
           if (data && data.length > 0) {
@@ -69,7 +69,7 @@ function App() {
   useEffect(() => {
     const fetchMenus = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/menus');
+        const response = await fetch('https://server-seven-eta-56.vercel.app/api/menus');
         if (response.ok) {
           const data = await response.json();
           // Filter to only include 'Active' menus and map to their names
