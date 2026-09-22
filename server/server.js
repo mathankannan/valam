@@ -1,8 +1,13 @@
-const express = require('express');
-const { Pool } = require('pg');
-const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
+import express from 'express';
+import pg from 'pg';
+const { Pool } = pg;
+import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());                        // Allows integrating React
@@ -437,10 +442,10 @@ app.get('/api/products', (req, res) => {
 });
 
 // Starting the server
-if (require.main === module) {
+if (process.argv[1] === __filename) {
     app.listen(5000, () => {
         console.log("Server is running on port 5000 🚀");
     });
 }
 
-module.exports = app;
+export default app;
