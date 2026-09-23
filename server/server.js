@@ -15,9 +15,24 @@ app.use('/combo_images', express.static(path.join(process.cwd(), 'src/valam_comb
 
 // Creating PostgreSQL Connection using Pool
 // Ensure you have POSTGRES_URL or DATABASE_URL in your Vercel Environment Variables
+let connString = process.env.POSTGRES_URL || process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL || "postgres://default:default@localhost:5432/valam_db";
+
+// Automatically convert Supabase Direct Connection (IPv6) to Transaction Pooler (IPv4) for Vercel
+if (connString && connString.includes('supabase.co') && !connString.includes('pooler')) {
+    try {
+        const urlObj = new URL(connString);
+        urlObj.hostname = 'aws-0-us-east-1.pooler.supabase.com';
+        urlObj.port = '6543';
+        connString = urlObj.toString();
+        console.log("Auto-converted DB URL to Transaction Pooler for Vercel compatibility.");
+    } catch (e) {
+        console.error("Error parsing DB connection string.");
+    }
+}
+
 const db = new Pool({
-    connectionString: process.env.POSTGRES_URL || process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL || "postgres://default:default@localhost:5432/valam_db",
-    ssl: (process.env.POSTGRES_URL || process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL) ? { rejectUnauthorized: false } : false // Required for Cloud Postgres
+    connectionString: connString,
+    ssl: connString.includes('localhost') ? false : { rejectUnauthorized: false }
 });
 
 db.connect((err) => {
