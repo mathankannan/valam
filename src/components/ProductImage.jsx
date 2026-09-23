@@ -5,7 +5,12 @@ export default function ProductImage({ category, name, image, className = "" }) 
 
   // Exact, verified direct upload URLs and local public assets
   const getImageUrl = () => {
-    if (image) return image; // Use dynamic image if provided
+    if (image) {
+      // If it's already a full URL or starts with /, return it
+      if (image.startsWith('http') || image.startsWith('/')) return image;
+      // Otherwise, assume it's in the /images/ folder
+      return `/images/${image}`;
+    }
     return "/home-image.jpg"; // Default placeholder if no image
   };
 
