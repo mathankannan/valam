@@ -43,6 +43,30 @@ db.connect((err) => {
     }
 });
 
+// DEBUG ROUTE: To check database connection status and error directly
+app.get('/api/debug-db', (req, res) => {
+    db.query('SELECT NOW()', (err, result) => {
+        if (err) {
+            res.status(500).json({ 
+                status: "Error", 
+                message: err.message, 
+                code: err.code,
+                host: db.options.host,
+                port: db.options.port,
+                user: db.options.user,
+                hasPassword: !!db.options.password
+            });
+        } else {
+            res.status(200).json({ 
+                status: "Success", 
+                time: result.rows[0],
+                host: db.options.host,
+                port: db.options.port
+            });
+        }
+    });
+});
+
 // A POST API to receive data from React and save it to the database
 app.post('/api/create-order', (req, res) => {
     const { OrderNumber, ItemsOrdered, ShipTo, MobileNumber, Address, City, Pincode } = req.body;
@@ -125,7 +149,11 @@ app.get('/api/combo-offers', (req, res) => {
     db.query(sql, (err, result) => {
         if (err) {
             console.error("Error fetching combo offers:", err);
-            res.status(500).json({ error: "An error occurred while fetching combo offers!" });
+            res.status(500).json({ 
+                error: "An error occurred while fetching combo offers!", 
+                details: err.message, 
+                code: err.code 
+            });
         } else {
             res.status(200).json(result.rows);
         }
