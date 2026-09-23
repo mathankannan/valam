@@ -12,14 +12,23 @@ const OrderItemsCell = ({ itemsString, orderId, onUpdate, readOnly }) => {
     let parsed = [];
     try {
       parsed = JSON.parse(itemsString);
-      // Handle double-stringified JSON which can happen due to DB data types
+      // Handle double-stringified JSON
       if (typeof parsed === 'string') {
         parsed = JSON.parse(parsed);
       }
-      if (!Array.isArray(parsed)) parsed = [];
-    } catch (e) {
-      parsed = [];
+    } catch (e1) {
+      try {
+        // If parsing fails due to literal backslashes in the DB string
+        let unescaped = itemsString.replace(/\\"/g, '"');
+        if (unescaped.startsWith('"') && unescaped.endsWith('"')) {
+          unescaped = unescaped.slice(1, -1);
+        }
+        parsed = JSON.parse(unescaped);
+      } catch (e2) {
+        parsed = [];
+      }
     }
+    if (!Array.isArray(parsed)) parsed = [];
     setItems(parsed);
   }, [itemsString]);
 
