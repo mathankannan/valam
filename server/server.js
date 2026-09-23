@@ -18,16 +18,18 @@ app.use('/combo_images', express.static(path.join(process.cwd(), 'src/valam_comb
 let connString = process.env.POSTGRES_URL || process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL || "postgres://default:default@localhost:5432/valam_db";
 
 // Automatically convert Supabase Direct Connection (IPv6) to Transaction Pooler (IPv4) for Vercel
-if (connString && connString.includes('supabase.co') && !connString.includes('pooler')) {
-    try {
-        const urlObj = new URL(connString);
+try {
+    const urlObj = new URL(connString);
+    if (urlObj.hostname.includes('supabase.co') && !urlObj.hostname.includes('pooler')) {
         urlObj.hostname = 'aws-0-us-east-1.pooler.supabase.com';
         urlObj.port = '6543';
-        connString = urlObj.toString();
         console.log("Auto-converted DB URL to Transaction Pooler for Vercel compatibility.");
-    } catch (e) {
-        console.error("Error parsing DB connection string.");
     }
+    // Remove query parameters like ?sslmode=require which cause SELF_SIGNED_CERT_IN_CHAIN conflicts
+    urlObj.search = '';
+    connString = urlObj.toString();
+} catch (e) {
+    console.error("Error parsing DB connection string.");
 }
 
 const db = new Pool({
