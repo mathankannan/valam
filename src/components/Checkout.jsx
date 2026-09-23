@@ -49,7 +49,7 @@ export default function Checkout({ cartItems, onClearCart, onNavigateHome }) {
 
     try {
       // Sending data to the API
-      const response = await fetch('https://server-seven-eta-56.vercel.app/api/create-order', {
+      const response = await fetch('/api/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

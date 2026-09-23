@@ -11,7 +11,7 @@ const ComboOffers = ({ onAddToCart }) => {
   useEffect(() => {
     const fetchComboOffers = async () => {
       try {
-        const response = await fetch('https://server-seven-eta-56.vercel.app/api/combo-offers');
+        const response = await fetch('/api/combo-offers');
         if (response.ok) {
           const data = await response.json();
           setComboOffers(data);
@@ -32,7 +32,7 @@ const ComboOffers = ({ onAddToCart }) => {
         id: 'combo_' + offer.combo_offer_id,
         name: offer.combo_offer_name,
         price: Number(offer.combo_offer_amount),
-        image: `https://server-seven-eta-56.vercel.app/combo_images/${offer.combo_offer_image}`,
+        image: `/combo_images/${offer.combo_offer_image}`,
         category: 'Combo Offer',
         quantity: qty
       });
@@ -58,7 +58,7 @@ const ComboOffers = ({ onAddToCart }) => {
 
             <div className="card-image-wrapper" onClick={() => { setSelectedOffer(offer); setQuantity(1); }}>
               <img
-                src={`https://server-seven-eta-56.vercel.app/combo_images/${offer.combo_offer_image}`}
+                src={`/combo_images/${offer.combo_offer_image}`}
                 alt={offer.combo_offer_name}
                 className="card-image"
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/400x300?text=Combo+Offer' }}
@@ -113,7 +113,7 @@ const ComboOffers = ({ onAddToCart }) => {
               {/* Left Column: Image */}
               <div className="modal-image-panel">
                 <img 
-                  src={`https://server-seven-eta-56.vercel.app/combo_images/${selectedOffer.combo_offer_image}`}
+                  src={`/combo_images/${selectedOffer.combo_offer_image}`}
                   alt={selectedOffer.combo_offer_name}
                   className="modal-image"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/400x300?text=Combo+Offer' }}
