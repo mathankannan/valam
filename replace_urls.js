@@ -3,7 +3,11 @@ const path = require('path');
 
 const filesToUpdate = [
     'src/components/AdminDashboard.jsx',
-    'src/App.jsx'
+    'src/App.jsx',
+    'src/components/AdminLogin.jsx',
+    'src/components/Checkout.jsx',
+    'src/components/ComboOffers.jsx',
+    'src/components/Footer.jsx'
 ];
 
 filesToUpdate.forEach(file => {
