@@ -16,8 +16,8 @@ app.use('/combo_images', express.static(path.join(process.cwd(), 'src/valam_comb
 // Creating PostgreSQL Connection using Pool
 // Ensure you have POSTGRES_URL or DATABASE_URL in your Vercel Environment Variables
 const db = new Pool({
-    connectionString: process.env.POSTGRES_URL || process.env.DATABASE_URL || "postgres://default:default@localhost:5432/valam_db",
-    ssl: (process.env.POSTGRES_URL || process.env.DATABASE_URL) ? { rejectUnauthorized: false } : false // Required for Cloud Postgres
+    connectionString: process.env.POSTGRES_URL || process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL || "postgres://default:default@localhost:5432/valam_db",
+    ssl: (process.env.POSTGRES_URL || process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL) ? { rejectUnauthorized: false } : false // Required for Cloud Postgres
 });
 
 db.connect((err) => {
