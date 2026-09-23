@@ -12,6 +12,10 @@ const OrderItemsCell = ({ itemsString, orderId, onUpdate, readOnly }) => {
     let parsed = [];
     try {
       parsed = JSON.parse(itemsString);
+      // Handle double-stringified JSON which can happen due to DB data types
+      if (typeof parsed === 'string') {
+        parsed = JSON.parse(parsed);
+      }
       if (!Array.isArray(parsed)) parsed = [];
     } catch (e) {
       parsed = [];
