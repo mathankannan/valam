@@ -1101,3 +1101,47 @@
 .dark .text-primary {
   color: #f1f5f9;
 }
+
+/* Mobile Menu Styles */
+@media (max-width: 768px) {
+  .admin-mobile-menu-btn {
+    display: flex !important;
+  }
+  .admin-nav {
+    display: none !important;
+    position: absolute;
+    top: 85px;
+    left: 20px;
+    right: 20px;
+    background: white;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    z-index: 1000;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    border: 1px solid #e2e8f0;
+  }
+  .dark .admin-nav {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+  }
+  .admin-nav.mobile-open {
+    display: flex !important;
+  }
+  .admin-nav-link {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+    margin: 0;
+  }
+  .dark .admin-nav-link {
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  .admin-top-bar {
+    position: relative;
+  }
+}

@@ -223,6 +223,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
   // Dashboard Tabs
   const isNilla = adminUser?.toLowerCase() === 'nilla' || adminUser?.toLowerCase() === 'nila';
   const [activeTab, setActiveTab] = useState(isNilla ? 'orders-details' : 'orders');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [menus, setMenus] = useState([]);
   const [menusLoading, setMenusLoading] = useState(true);
@@ -807,25 +808,38 @@ export default function AdminDashboard({ onLogout, adminUser }) {
           </div>
         </div>
 
+        {/* Mobile Menu Toggle Button */}
+        <button 
+          className="admin-mobile-menu-btn" 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          style={{ display: 'none', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', cursor: 'pointer', marginLeft: 'auto', padding: '8px', color: '#1e293b' }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
         {/* Center - Navigation */}
-        <nav className="admin-nav">
+        <nav className={`admin-nav ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
           {!isNilla && (
-            <span className={`admin-nav-link ${activeTab === 'orders' ? 'active' : ''}`} onClick={() => setActiveTab('orders')}>Home</span>
+            <span className={`admin-nav-link ${activeTab === 'orders' ? 'active' : ''}`} onClick={() => { setActiveTab('orders'); setIsMobileMenuOpen(false); }}>Home</span>
           )}
-          <span className={`admin-nav-link ${activeTab === 'orders-details' ? 'active' : ''}`} onClick={() => setActiveTab('orders-details')}>Orders Details</span>
+          <span className={`admin-nav-link ${activeTab === 'orders-details' ? 'active' : ''}`} onClick={() => { setActiveTab('orders-details'); setIsMobileMenuOpen(false); }}>Orders Details</span>
           {!isNilla && (
             <>
-              <span className={`admin-nav-link ${activeTab === 'menu-list' ? 'active' : ''}`} onClick={() => setActiveTab('menu-list')}>Menu</span>
-              <span className={`admin-nav-link ${activeTab === 'content-list' ? 'active' : ''}`} onClick={() => setActiveTab('content-list')}>Content</span>
-              <span className={`admin-nav-link ${activeTab === 'subscribers' ? 'active' : ''}`} onClick={() => setActiveTab('subscribers')}>Subscribe Mail</span>
-              <span className={`admin-nav-link ${activeTab === 'combo-offers' ? 'active' : ''}`} onClick={() => setActiveTab('combo-offers')}>Combo Offer</span>
+              <span className={`admin-nav-link ${activeTab === 'menu-list' ? 'active' : ''}`} onClick={() => { setActiveTab('menu-list'); setIsMobileMenuOpen(false); }}>Menu</span>
+              <span className={`admin-nav-link ${activeTab === 'content-list' ? 'active' : ''}`} onClick={() => { setActiveTab('content-list'); setIsMobileMenuOpen(false); }}>Content</span>
+              <span className={`admin-nav-link ${activeTab === 'subscribers' ? 'active' : ''}`} onClick={() => { setActiveTab('subscribers'); setIsMobileMenuOpen(false); }}>Subscribe Mail</span>
+              <span className={`admin-nav-link ${activeTab === 'combo-offers' ? 'active' : ''}`} onClick={() => { setActiveTab('combo-offers'); setIsMobileMenuOpen(false); }}>Combo Offer</span>
             </>
           )}
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '16px' }}>
             {/* Notification Button */}
             <button 
               className="btn-icon" 
-              onClick={() => setActiveTab('orders')} 
+              onClick={() => { setActiveTab('orders'); setIsMobileMenuOpen(false); }} 
               title="Pending Orders" 
               style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: '0', color: '#475569', backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
             >
