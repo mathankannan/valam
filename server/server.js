@@ -49,9 +49,9 @@ db.connect((err) => {
 app.get('/api/debug-db', (req, res) => {
     db.query('SELECT NOW()', (err, result) => {
         if (err) {
-            res.status(500).json({ 
-                status: "Error", 
-                message: err.message, 
+            res.status(500).json({
+                status: "Error",
+                message: err.message,
                 code: err.code,
                 host: db.options.host,
                 port: db.options.port,
@@ -59,8 +59,8 @@ app.get('/api/debug-db', (req, res) => {
                 hasPassword: !!db.options.password
             });
         } else {
-            res.status(200).json({ 
-                status: "Success", 
+            res.status(200).json({
+                status: "Success",
                 time: result.rows[0],
                 host: db.options.host,
                 port: db.options.port
@@ -151,10 +151,10 @@ app.get('/api/combo-offers', (req, res) => {
     db.query(sql, (err, result) => {
         if (err) {
             console.error("Error fetching combo offers:", err);
-            res.status(500).json({ 
-                error: "An error occurred while fetching combo offers!", 
-                details: err.message, 
-                code: err.code 
+            res.status(500).json({
+                error: "An error occurred while fetching combo offers!",
+                details: err.message,
+                code: err.code
             });
         } else {
             res.status(200).json(result.rows);
@@ -228,7 +228,7 @@ app.delete('/api/combo-offers/:id', (req, res) => {
 
 // A GET API to fetch all orders
 app.get('/api/orders', (req, res) => {
-    const sql = 'SELECT * FROM "Orders" ORDER BY id ASC';
+    const sql = 'SELECT * FROM "Orders" ORDER BY id DESC';
     db.query(sql, (err, result) => {
         if (err) {
             console.error(err);
@@ -464,7 +464,7 @@ app.get('/api/products', (req, res) => {
                     name: row.menu_name_tamil ? `${displayName} - ${row.menu_name_tamil}` : displayName,
                     category: displayName,
                     price: Number(row.amount || 0),
-                    rating: 5.0, 
+                    rating: 5.0,
                     reviews: 0,
                     image: row.image ? `${req.headers['x-forwarded-proto'] || req.protocol}://${req.get('host')}/images/${row.image}` : '',
                     description: row.content_text_english || '',
