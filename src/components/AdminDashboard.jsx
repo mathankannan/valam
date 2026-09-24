@@ -827,7 +827,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
         </nav>
 
         {/* Right Side - Actions & Hamburger */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: 'auto' }}>
+        <div className="admin-mobile-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: 'auto' }}>
           {/* Notification Button */}
           <button 
             className="btn-icon" 
