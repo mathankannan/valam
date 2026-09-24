@@ -808,18 +808,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
           </div>
         </div>
 
-        {/* Mobile Menu Toggle Button */}
-        <button 
-          className="admin-mobile-menu-btn" 
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          style={{ display: 'none', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', cursor: 'pointer', marginLeft: 'auto', padding: '8px', color: '#1e293b' }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
+        {/* Mobile menu button moved to the Right Side div below */}
 
         {/* Center - Navigation */}
         <nav className={`admin-nav ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
@@ -835,26 +824,41 @@ export default function AdminDashboard({ onLogout, adminUser }) {
               <span className={`admin-nav-link ${activeTab === 'combo-offers' ? 'active' : ''}`} onClick={() => { setActiveTab('combo-offers'); setIsMobileMenuOpen(false); }}>Combo Offer</span>
             </>
           )}
-          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '16px' }}>
-            {/* Notification Button */}
-            <button 
-              className="btn-icon" 
-              onClick={() => { setActiveTab('orders'); setIsMobileMenuOpen(false); }} 
-              title="Pending Orders" 
-              style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: '0', color: '#475569', backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              <Bell className="w-6 h-6" />
-              {hasPendingOrders && (
-                <span className="notification-blink"></span>
-              )}
-            </button>
-
-            {/* Logout Button inside Nav for mobile responsiveness */}
-            <button className="logout-nav-btn" onClick={onLogout} title="Logout" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: '0', color: '#ef4444', border: '1px solid #fee2e2', backgroundColor: '#fef2f2', borderRadius: '50%', transition: 'all 0.2s', cursor: 'pointer' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            </button>
-          </div>
         </nav>
+
+        {/* Right Side - Actions & Hamburger */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: 'auto' }}>
+          {/* Notification Button */}
+          <button 
+            className="btn-icon" 
+            onClick={() => { setActiveTab('orders'); setIsMobileMenuOpen(false); }} 
+            title="Pending Orders" 
+            style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: '0', color: '#475569', backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+          >
+            <Bell className="w-6 h-6" />
+            {hasPendingOrders && (
+              <span className="notification-blink"></span>
+            )}
+          </button>
+
+          {/* Logout Button */}
+          <button className="logout-nav-btn" onClick={onLogout} title="Logout" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: '0', color: '#ef4444', border: '1px solid #fee2e2', backgroundColor: '#fef2f2', borderRadius: '50%', transition: 'all 0.2s', cursor: 'pointer' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          </button>
+
+          {/* Mobile Menu Toggle Button */}
+          <button 
+            className="admin-mobile-menu-btn" 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            style={{ display: 'none', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: '#1e293b' }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className="dashboard-content glass">
