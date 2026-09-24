@@ -1113,8 +1113,10 @@
     display: none !important;
     position: absolute;
     top: 85px;
-    left: 20px;
-    right: 20px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
     background: white;
     flex-direction: column;
     padding: 20px;
