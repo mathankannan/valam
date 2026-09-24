@@ -280,6 +280,20 @@ app.put('/api/orders/:id/items', (req, res) => {
     });
 });
 
+// A DELETE API to delete an order
+app.delete('/api/orders/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM "Orders" WHERE id = $1';
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error("Error deleting order:", err);
+            res.status(500).json({ error: "An error occurred while deleting the order!" });
+        } else {
+            res.status(200).json({ message: "Order successfully deleted!" });
+        }
+    });
+});
+
 // A POST API to receive menu
 app.post('/api/menus', (req, res) => {
     const { menuName } = req.body;

@@ -748,6 +748,9 @@ export default function AdminDashboard({ onLogout, adminUser }) {
       } else if (type === 'content') {
         url = `/api/contents/${id}`;
         successMessage = "🗑️ Content has been deleted successfully!";
+      } else if (type === 'order') {
+        url = `/api/orders/${id}`;
+        successMessage = "🗑️ Order has been deleted successfully!";
       }
 
       const response = await fetch(url, { method: 'DELETE' });
@@ -759,6 +762,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
       if (type === 'comboOffer') fetchComboOffers();
       else if (type === 'menu') fetchMenus();
       else if (type === 'content') fetchContents();
+      else if (type === 'order') fetchOrders();
 
     } catch (err) {
       console.error(err);
@@ -916,7 +920,17 @@ export default function AdminDashboard({ onLogout, adminUser }) {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingBottom: '12px' }}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)', padding: '16px', borderRadius: '12px', border: 'none', marginBottom: '8px', boxShadow: '0 4px 10px rgba(30, 58, 138, 0.2)', position: 'relative', overflow: 'hidden' }}>
                         <span style={{ fontSize: '12px', fontWeight: '700', color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '0.5px', zIndex: 1 }}>Order Number</span>
-                        <span style={{ fontSize: '20px', fontWeight: '800', color: '#ffffff', zIndex: 1 }}>#{order.order_number}</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 1 }}>
+                          <span style={{ fontSize: '20px', fontWeight: '800', color: '#ffffff' }}>#{order.order_number}</span>
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); handleDelete(order.id, 'order'); }}
+                            style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.5)', color: '#fca5a5', padding: '4px 8px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', zIndex: 2 }}
+                            title="Delete Order"
+                          >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            Delete
+                          </button>
+                        </div>
                         {/* Decorative circle to match the profile style from first image */}
                         <div style={{ position: 'absolute', bottom: '-20px', right: '10px', width: '60px', height: '60px', borderRadius: '50%', backgroundColor: 'rgba(255, 255, 255, 0.05)', zIndex: 0 }}></div>
                       </div>
