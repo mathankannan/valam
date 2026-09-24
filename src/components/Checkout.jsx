@@ -65,6 +65,7 @@ export default function Checkout({ cartItems, onClearCart, onNavigateHome }) {
         console.log('✅ Order Saved to MySQL Database Successfully!');
         setLoading(false);
         setIsSubmitted(true);
+        window.scrollTo(0, 0);
         setOrderNumber(newOrderNum);
         setOrderedItems([...cartItems]);
         onClearCart();
