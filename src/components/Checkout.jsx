@@ -150,7 +150,37 @@ export default function Checkout({ cartItems, onClearCart, onNavigateHome }) {
       {/* <h2 className="checkout-title">Secure Order</h2> */}
 
       <div className="checkout-grid">
-        {/* Left Column: Forms */}
+        {/* Top/Right Column: Order Summary */}
+        <div className="checkout-summary-panel">
+          <div className="summary-card glass">
+            <h3 className="section-title">Order Summary</h3>
+
+            <div className="checkout-items-list">
+              {cartItems.map((item, index) => (
+                <div key={`${item.id}-${item.selectedColor || index}`} className="summary-item">
+                  <ProductImage category={item.category} name={item.name} image={item.image} className="summary-item-img" />
+                  <div className="summary-item-info">
+                    <h4>
+                      {item.name.includes(' - ') ? item.name.split(' - ')[0] : item.name}
+                    </h4>
+
+                    <span className="summary-item-qty">Qty: {item.quantity}</span>
+                  </div>
+                  <span className="summary-item-price">₹{(item.price * item.quantity).toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="summary-pricing">
+              <div className="summary-row total-row">
+                <span>Total Due</span>
+                <span className="pricing-total">₹{total.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom/Left Column: Forms */}
         <form onSubmit={handleFormSubmit} className="checkout-forms-panel">
 
           {/* Shipping Section */}
@@ -249,36 +279,6 @@ export default function Checkout({ cartItems, onClearCart, onNavigateHome }) {
             )}
           </button>
         </form>
-
-        {/* Right Column: Order Summary */}
-        <div className="checkout-summary-panel">
-          <div className="summary-card glass">
-            <h3 className="section-title">Order Summary</h3>
-
-            <div className="checkout-items-list">
-              {cartItems.map((item, index) => (
-                <div key={`${item.id}-${item.selectedColor || index}`} className="summary-item">
-                  <ProductImage category={item.category} name={item.name} image={item.image} className="summary-item-img" />
-                  <div className="summary-item-info">
-                    <h4>
-                      {item.name.includes(' - ') ? item.name.split(' - ')[0] : item.name}
-                    </h4>
-
-                    <span className="summary-item-qty">Qty: {item.quantity}</span>
-                  </div>
-                  <span className="summary-item-price">₹{(item.price * item.quantity).toFixed(2)}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="summary-pricing">
-              <div className="summary-row total-row">
-                <span>Total Due</span>
-                <span className="pricing-total">₹{total.toFixed(2)}</span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
 
