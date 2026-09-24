@@ -1147,7 +1147,7 @@
     position: relative;
     padding: 12px 16px;
     flex-wrap: nowrap;
-    overflow-x: auto;
+    overflow: visible;
   }
   .admin-dashboard-container {
     padding: 0px 16px;
