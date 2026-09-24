@@ -5,13 +5,13 @@ import './Checkout.css';
 
 export default function Checkout({ cartItems, onClearCart, onNavigateHome }) {
   const [formData, setFormData] = useState({
-    name: 'Kannan G',
-    mobileNumber: '9688913856',
-    address: '123 Main Street',
-    city: 'Chennai',
-    pincode: '621714',
-    landmark: 'Near Temple',
-    email: 'kannanmca16@gmail.com'
+    name: '',
+    mobileNumber: '',
+    address: '',
+    city: '',
+    pincode: '',
+    landmark: '',
+    email: ''
   });
 
   //console.log(formData);
