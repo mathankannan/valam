@@ -372,8 +372,8 @@ export default function AdminDashboard({ onLogout, adminUser }) {
 
   const indexOfLastOrder = ordersCurrentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
-  const totalOrderPages = Math.ceil(filteredOrders.length / ordersPerPage);
+  const currentOrders = filteredOrders; // Display all orders
+  const totalOrderPages = 1; // Hide pagination UI
 
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
