@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Check, ShoppingCart } from './Icons';
 import ProductImage from './ProductImage';
 import './Checkout.css';
@@ -15,6 +15,10 @@ export default function Checkout({ cartItems, onClearCart, onNavigateHome }) {
   });
 
   //console.log(formData);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
