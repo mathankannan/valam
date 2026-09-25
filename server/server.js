@@ -177,7 +177,7 @@ app.post('/api/combo-offers', (req, res) => {
     db.query(sql, [name, amount, finalImageName], (err, result) => {
         if (err) {
             console.error("Error saving combo offer:", err);
-            res.status(500).json({ error: "An error occurred while saving the combo offer!" });
+            res.status(500).json({ error: "An error occurred while saving the combo offer!", details: err.message });
         } else {
             res.status(200).json({ message: "Combo offer successfully saved!", id: result.rows[0].combo_offer_id });
         }
@@ -200,7 +200,7 @@ app.put('/api/combo-offers/:id', (req, res) => {
     db.query(sql, [name, amount, finalImageName, id], (err, result) => {
         if (err) {
             console.error("Error updating combo offer:", err);
-            res.status(500).json({ error: "An error occurred while updating the combo offer!" });
+            res.status(500).json({ error: "An error occurred while updating the combo offer!", details: err.message });
         } else {
             res.status(200).json({ message: "Combo offer successfully updated!" });
         }
@@ -387,11 +387,13 @@ app.post('/api/contents', (req, res) => {
         finalImageName = imageFile;
     }
 
+    const parsedAmount = amount ? parseFloat(amount) : 0;
+
     const sql = 'INSERT INTO "VALAM_CONTENT_TABLE" (menu_id, menu_name, menu_name_tamil, amount, image, content_text_english, content_text_tamil, ingredients_text_english, ingredients_text_tamil, net_weight, shelf_life) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING content_id';
-    db.query(sql, [menu_id, menu_name, menu_name_tamil, amount, finalImageName, content_text_english, content_text_tamil, ingredients_text_english, ingredients_text_tamil, net_weight, shelf_life], (err, result) => {
+    db.query(sql, [menu_id, menu_name, menu_name_tamil, parsedAmount, finalImageName, content_text_english, content_text_tamil, ingredients_text_english, ingredients_text_tamil, net_weight, shelf_life], (err, result) => {
         if (err) {
             console.error("Error saving content:", err);
-            res.status(500).json({ error: "An error occurred while saving the content!" });
+            res.status(500).json({ error: "An error occurred while saving the content!", details: err.message });
         } else {
             res.status(200).json({ message: "Content successfully saved!", id: result.rows[0].content_id });
         }
@@ -427,11 +429,13 @@ app.put('/api/contents/:id', (req, res) => {
         finalImageName = imageFile;
     }
 
+    const parsedAmount = amount ? parseFloat(amount) : 0;
+
     const sql = 'UPDATE "VALAM_CONTENT_TABLE" SET menu_id = $1, menu_name = $2, menu_name_tamil = $3, amount = $4, image = $5, content_text_english = $6, content_text_tamil = $7, ingredients_text_english = $8, ingredients_text_tamil = $9, net_weight = $10, shelf_life = $11 WHERE content_id = $12';
-    db.query(sql, [menu_id, menu_name, menu_name_tamil, amount, finalImageName, content_text_english, content_text_tamil, ingredients_text_english, ingredients_text_tamil, net_weight, shelf_life, id], (err, result) => {
+    db.query(sql, [menu_id, menu_name, menu_name_tamil, parsedAmount, finalImageName, content_text_english, content_text_tamil, ingredients_text_english, ingredients_text_tamil, net_weight, shelf_life, id], (err, result) => {
         if (err) {
             console.error("Error updating content:", err);
-            res.status(500).json({ error: "An error occurred while updating the content!" });
+            res.status(500).json({ error: "An error occurred while updating the content!", details: err.message });
         } else {
             res.status(200).json({ message: "Content successfully updated!" });
         }

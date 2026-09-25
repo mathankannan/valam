@@ -643,7 +643,8 @@ export default function AdminDashboard({ onLogout, adminUser }) {
         fetchContents();
       } else {
         const errorData = await response.json();
-        showToast(`Failed to save content: ${errorData.error || 'Unknown error'}`, 'error');
+        const details = errorData.details ? ` (${errorData.details})` : '';
+        showToast(`Failed to save content: ${errorData.error || 'Unknown error'}${details}`, 'error');
       }
     } catch (err) {
       console.error(err);
