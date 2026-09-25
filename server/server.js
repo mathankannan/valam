@@ -290,13 +290,13 @@ app.delete('/api/orders/:id', (req, res) => {
 
 // A POST API to receive menu
 app.post('/api/menus', (req, res) => {
-    const { menuName } = req.body;
+    const { menuName, status } = req.body;
     if (!menuName) {
         return res.status(400).json({ error: "Menu Name is required!" });
     }
 
-    const sql = 'INSERT INTO "VALAM_MENU" (menu_name) VALUES ($1) RETURNING menu_id';
-    db.query(sql, [menuName], (err, result) => {
+    const sql = 'INSERT INTO "VALAM_MENU" (menu_name, status) VALUES ($1, $2) RETURNING menu_id';
+    db.query(sql, [menuName, status || 'Active'], (err, result) => {
         if (err) {
             console.error("Error saving menu:", err);
             res.status(500).json({ error: "An error occurred while saving the menu!" });
