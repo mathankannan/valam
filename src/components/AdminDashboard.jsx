@@ -774,10 +774,10 @@ export default function AdminDashboard({ onLogout, adminUser }) {
     }
   };
 
-  const hasPendingOrders = orders.some(order => {
+  const pendingOrdersCount = orders.filter(order => {
     const status = order.Order_status || order.order_status || 'Pending';
     return status.toLowerCase() === 'pending';
-  });
+  }).length;
 
   return (
     <div className="admin-dashboard-container animate-fade-in">
@@ -837,8 +837,25 @@ export default function AdminDashboard({ onLogout, adminUser }) {
             style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: '0', color: '#475569', backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
           >
             <Bell className="w-6 h-6" />
-            {hasPendingOrders && (
-              <span className="notification-blink"></span>
+            {pendingOrdersCount > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: '-2px',
+                right: '-2px',
+                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                color: 'white',
+                fontSize: '10px',
+                fontWeight: '700',
+                minWidth: '18px',
+                height: '18px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '2px solid white'
+              }}>
+                {pendingOrdersCount}
+              </span>
             )}
           </button>
 
