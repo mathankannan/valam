@@ -29,6 +29,7 @@ function App() {
   const [categories, setCategories] = useState(['All']);
   const [displayCategories, setDisplayCategories] = useState(['All']);
   const [hasComboOffers, setHasComboOffers] = useState(false);
+  const [comboOffersCount, setComboOffersCount] = useState(0);
 
   // Fetch combo offers status for notifications
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
         if (response.ok) {
           const data = await response.json();
           setHasComboOffers(data && data.length > 0);
+          setComboOffersCount(data ? data.length : 0);
         }
       } catch (error) {
         console.error("Error fetching combo offers status:", error);
@@ -190,6 +192,7 @@ function App() {
           isDarkMode={isDarkMode}
           setIsDarkMode={setIsDarkMode}
           hasComboOffers={hasComboOffers}
+          comboOffersCount={comboOffersCount}
         />
       )}
 

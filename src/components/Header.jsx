@@ -10,7 +10,8 @@ export default function Header({
   setCartOpen,
   isDarkMode,
   setIsDarkMode,
-  hasComboOffers
+  hasComboOffers,
+  comboOffersCount
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -93,7 +94,7 @@ export default function Header({
             className="btn-icon"
             aria-label="Notifications"
             onClick={() => {
-              if (hasComboOffers) {
+              if (comboOffersCount > 0) {
                 if (activeView !== 'home') {
                   handleNavClick('home');
                   setTimeout(() => {
@@ -107,8 +108,8 @@ export default function Header({
             style={{ position: 'relative' }}
           >
             <Bell className="w-5 h-5" />
-            {hasComboOffers && (
-              <span className="notification-blink"></span>
+            {comboOffersCount > 0 && (
+              <span className="cart-badge">{comboOffersCount}</span>
             )}
           </button>
 
