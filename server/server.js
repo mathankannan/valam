@@ -170,11 +170,8 @@ app.post('/api/combo-offers', (req, res) => {
         return res.status(400).json({ error: "Name, Amount, and Image are required!" });
     }
 
-    let finalImageName = '';
-    if (imageFile && imageName) {
-        const savedName = saveImage(imageFile, imageName, 'valam_combo_offer_images');
-        if (savedName) finalImageName = savedName;
-    }
+    // Save base64 string directly to database
+    let finalImageName = imageFile;
 
     const sql = 'INSERT INTO "VALAM_COMBO_OFFER_TABLE" (combo_offer_name, combo_offer_amount, combo_offer_image) VALUES ($1, $2, $3) RETURNING combo_offer_id';
     db.query(sql, [name, amount, finalImageName], (err, result) => {
@@ -196,11 +193,8 @@ app.put('/api/combo-offers/:id', (req, res) => {
         return res.status(400).json({ error: "Name, Amount, and Image are required!" });
     }
 
-    let finalImageName = existingImage || '';
-    if (imageFile && imageName) {
-        const savedName = saveImage(imageFile, imageName, 'valam_combo_offer_images');
-        if (savedName) finalImageName = savedName;
-    }
+    // Use new base64 image if provided, else keep existing
+    let finalImageName = imageFile ? imageFile : (existingImage || '');
 
     const sql = 'UPDATE "VALAM_COMBO_OFFER_TABLE" SET combo_offer_name = $1, combo_offer_amount = $2, combo_offer_image = $3 WHERE combo_offer_id = $4';
     db.query(sql, [name, amount, finalImageName, id], (err, result) => {
@@ -387,10 +381,10 @@ function saveImage(base64Data, originalName, folderName = 'valam_images') {
 app.post('/api/contents', (req, res) => {
     const { menu_id, menu_name, menu_name_tamil, amount, imageFile, imageName, existingImage, content_text_english, content_text_tamil, ingredients_text_english, ingredients_text_tamil, net_weight, shelf_life } = req.body;
 
+    // Save base64 string directly to database
     let finalImageName = existingImage || '';
-    if (imageFile && imageName) {
-        const savedName = saveImage(imageFile, imageName);
-        if (savedName) finalImageName = savedName;
+    if (imageFile) {
+        finalImageName = imageFile;
     }
 
     const sql = 'INSERT INTO "VALAM_CONTENT_TABLE" (menu_id, menu_name, menu_name_tamil, amount, image, content_text_english, content_text_tamil, ingredients_text_english, ingredients_text_tamil, net_weight, shelf_life) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING content_id';
@@ -427,10 +421,10 @@ app.put('/api/contents/:id', (req, res) => {
     const { id } = req.params;
     const { menu_id, menu_name, menu_name_tamil, amount, imageFile, imageName, existingImage, content_text_english, content_text_tamil, ingredients_text_english, ingredients_text_tamil, net_weight, shelf_life } = req.body;
 
+    // Use new base64 image if provided, else keep existing
     let finalImageName = existingImage || '';
-    if (imageFile && imageName) {
-        const savedName = saveImage(imageFile, imageName);
-        if (savedName) finalImageName = savedName;
+    if (imageFile) {
+        finalImageName = imageFile;
     }
 
     const sql = 'UPDATE "VALAM_CONTENT_TABLE" SET menu_id = $1, menu_name = $2, menu_name_tamil = $3, amount = $4, image = $5, content_text_english = $6, content_text_tamil = $7, ingredients_text_english = $8, ingredients_text_tamil = $9, net_weight = $10, shelf_life = $11 WHERE content_id = $12';
@@ -480,7 +474,7 @@ app.get('/api/products', (req, res) => {
                     price: Number(row.amount || 0),
                     rating: 5.0,
                     reviews: 0,
-                    image: row.image ? `${req.headers['x-forwarded-proto'] || req.protocol}://${req.get('host')}/images/${row.image}` : '',
+                    image: row.image ? (row.image.startsWith('data:') ? row.image : `${req.headers['x-forwarded-proto'] || req.protocol}://${req.get('host')}/images/${row.image}`) : '',
                     description: row.content_text_english || '',
                     descriptionTa: row.content_text_tamil || '',
                     ingredientsEn: row.ingredients_text_english || '',

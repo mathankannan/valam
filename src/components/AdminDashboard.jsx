@@ -1364,7 +1364,9 @@ export default function AdminDashboard({ onLogout, adminUser }) {
                         <td data-label="ID">{content.content_id}</td>
                         <td data-label="Menu Name"><span style={{ fontWeight: '600', color: '#1e293b' }}>{content.actual_menu_name || content.menu_name}</span></td>
                         <td data-label="Amount">₹{content.amount}</td>
-                        <td data-label="Image">{content.image ? content.image : 'No Image'}</td>
+                        <td data-label="Image">
+                          {content.image ? (content.image.startsWith('data:') ? 'Base64 Image' : content.image) : 'No Image'}
+                        </td>
                         <td data-label="Created Date">{content.created_date ? new Date(content.created_date).toLocaleDateString('en-GB') : 'N/A'}</td>
                         <td data-label="Actions" style={{ display: 'flex', gap: '8px' }}>
                           <button className="btn btn-primary btn-sm" onClick={() => openEditContentModal(content)} title="Edit Content" style={{ width: '34px', height: '34px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 0 }}>
@@ -1512,7 +1514,9 @@ export default function AdminDashboard({ onLogout, adminUser }) {
                         <td data-label="ID">{offer.combo_offer_id}</td>
                         <td data-label="Name">{offer.combo_offer_name}</td>
                         <td data-label="Amount">₹{offer.combo_offer_amount}</td>
-                        <td data-label="Image">{offer.combo_offer_image ? offer.combo_offer_image : 'No Image'}</td>
+                        <td data-label="Image">
+                          {offer.combo_offer_image ? (offer.combo_offer_image.startsWith('data:') ? 'Base64 Image' : offer.combo_offer_image) : 'No Image'}
+                        </td>
                         <td data-label="Created Date">{offer.created_date ? new Date(offer.created_date).toLocaleString('en-GB') : 'N/A'}</td>
                         <td data-label="Actions" style={{ display: 'flex', gap: '8px' }}>
                           <button
@@ -1672,7 +1676,9 @@ export default function AdminDashboard({ onLogout, adminUser }) {
                 <label>Upload Image</label>
                 {contentForm.existingImage && !contentForm.imageFile && (
                   <div style={{ marginBottom: '8px', fontSize: '13px', color: '#64748b' }}>
-                    Current image: <strong>{contentForm.existingImage}</strong>
+                    Current image: <strong>
+                      {contentForm.existingImage.startsWith('data:') ? 'Base64 Image Present' : contentForm.existingImage}
+                    </strong>
                   </div>
                 )}
                 <input
@@ -1800,7 +1806,9 @@ export default function AdminDashboard({ onLogout, adminUser }) {
                   <label>Upload Image</label>
                   {comboForm.existingImage && !comboForm.imageFile && (
                     <div style={{ marginBottom: '8px', fontSize: '13px', color: '#64748b' }}>
-                      Current image: <strong>{comboForm.existingImage}</strong>
+                      Current image: <strong>
+                        {comboForm.existingImage.startsWith('data:') ? 'Base64 Image Present' : comboForm.existingImage}
+                      </strong>
                     </div>
                   )}
                   <input
