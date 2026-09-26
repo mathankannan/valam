@@ -149,8 +149,8 @@ function App() {
       }
     });
 
-    // Auto-open cart for feedback
-    setCartOpen(true);
+    // Auto-open cart for feedback removed as per user request
+    // setCartOpen(true);
   };
 
   const handleUpdateQuantity = (id, color, newQuantity) => {
