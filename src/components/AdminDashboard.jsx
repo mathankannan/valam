@@ -93,14 +93,14 @@ const OrderItemsCell = ({ itemsString, orderId, onUpdate, readOnly }) => {
               )}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {items.map((item, index) => (
-                  <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', gap: '16px' }}>
-                    <span style={{ fontWeight: '600', color: '#1e293b', fontSize: '15px', flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.Name}</span>
+                  <div key={index} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', gap: '16px' }}>
+                    <span style={{ fontWeight: '600', color: '#1e293b', fontSize: '15px', flex: '1 1 150px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.Name}</span>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                       <span style={{ backgroundColor: '#e0e7ff', color: '#4f46e5', padding: '4px 12px', borderRadius: '20px', fontSize: '13px', fontWeight: '700', whiteSpace: 'nowrap' }}>
                         Qty: {item.Quantity}
                       </span>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', borderLeft: '1px solid #e2e8f0', paddingLeft: '12px', marginLeft: '4px' }}>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px', borderLeft: '1px solid #e2e8f0', paddingLeft: '12px', marginLeft: '4px' }}>
                         {readOnly ? (
                           <>
                             {item.availability === 'available' ? (
