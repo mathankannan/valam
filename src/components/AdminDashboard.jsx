@@ -221,8 +221,8 @@ export default function AdminDashboard({ onLogout, adminUser }) {
   const [editingMenuId, setEditingMenuId] = useState(null);
 
   // Dashboard Tabs
-  const isNilla = adminUser?.toLowerCase() === 'nilla' || adminUser?.toLowerCase() === 'nila';
-  const [activeTab, setActiveTab] = useState(isNilla ? 'orders-details' : 'orders');
+  const isRestrictedUser = adminUser?.toLowerCase() === 'nila' || adminUser?.toLowerCase() === 'kodi';
+  const [activeTab, setActiveTab] = useState(isRestrictedUser ? 'orders-details' : 'orders');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [menus, setMenus] = useState([]);
@@ -696,10 +696,10 @@ export default function AdminDashboard({ onLogout, adminUser }) {
     }
 
     try {
-      const url = editingComboId 
-        ? `/api/combo-offers/${editingComboId}` 
+      const url = editingComboId
+        ? `/api/combo-offers/${editingComboId}`
         : '/api/combo-offers';
-      
+
       const method = editingComboId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -740,7 +740,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
     try {
       let url = '';
       let successMessage = '';
-      
+
       if (type === 'comboOffer') {
         url = `/api/combo-offers/${id}`;
         successMessage = "🗑️ Combo Offer has been deleted successfully!";
@@ -760,7 +760,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
         throw new Error('Failed to delete item');
       }
       showToast(successMessage);
-      
+
       if (type === 'comboOffer') fetchComboOffers();
       else if (type === 'menu') fetchMenus();
       else if (type === 'content') fetchContents();
@@ -813,11 +813,11 @@ export default function AdminDashboard({ onLogout, adminUser }) {
 
         {/* Center - Navigation */}
         <nav className={`admin-nav ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
-          {!isNilla && (
+          {!isRestrictedUser && (
             <span className={`admin-nav-link ${activeTab === 'orders' ? 'active' : ''}`} onClick={() => { setActiveTab('orders'); setIsMobileMenuOpen(false); }}>Home</span>
           )}
           <span className={`admin-nav-link ${activeTab === 'orders-details' ? 'active' : ''}`} onClick={() => { setActiveTab('orders-details'); setIsMobileMenuOpen(false); }}>Orders Details</span>
-          {!isNilla && (
+          {!isRestrictedUser && (
             <>
               <span className={`admin-nav-link ${activeTab === 'menu-list' ? 'active' : ''}`} onClick={() => { setActiveTab('menu-list'); setIsMobileMenuOpen(false); }}>Menu</span>
               <span className={`admin-nav-link ${activeTab === 'content-list' ? 'active' : ''}`} onClick={() => { setActiveTab('content-list'); setIsMobileMenuOpen(false); }}>Content</span>
@@ -830,10 +830,10 @@ export default function AdminDashboard({ onLogout, adminUser }) {
         {/* Right Side - Actions & Hamburger */}
         <div className="admin-mobile-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: 'auto' }}>
           {/* Notification Button */}
-          <button 
-            className="btn-icon" 
-            onClick={() => { setActiveTab('orders'); setIsMobileMenuOpen(false); }} 
-            title="Pending Orders" 
+          <button
+            className="btn-icon"
+            onClick={() => { setActiveTab('orders'); setIsMobileMenuOpen(false); }}
+            title="Pending Orders"
             style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: '0', color: '#475569', backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
           >
             <Bell className="w-6 h-6" />
@@ -865,8 +865,8 @@ export default function AdminDashboard({ onLogout, adminUser }) {
           </button>
 
           {/* Mobile Menu Toggle Button */}
-          <button 
-            className="admin-mobile-menu-btn" 
+          <button
+            className="admin-mobile-menu-btn"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             style={{ display: 'none', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: '#1e293b' }}
           >
@@ -965,7 +965,7 @@ export default function AdminDashboard({ onLogout, adminUser }) {
                         <span style={{ fontSize: '12px', fontWeight: '700', color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '0.5px', zIndex: 1 }}>Order Number</span>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 1 }}>
                           <span style={{ fontSize: '20px', fontWeight: '800', color: '#ffffff' }}>#{order.order_number}</span>
-                          <button 
+                          <button
                             onClick={(e) => { e.stopPropagation(); handleDelete(order.id, 'order'); }}
                             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', padding: 0, borderRadius: '50%', backgroundColor: '#ef4444', color: 'white', border: 'none', cursor: 'pointer', zIndex: 2 }}
                             title="Delete Order"
@@ -1182,36 +1182,36 @@ export default function AdminDashboard({ onLogout, adminUser }) {
                     {(() => {
                       const status = order.Order_status || order.order_status || 'Pending';
                       const isCompleted = status.toLowerCase() === 'completed' || status.toLowerCase() === 'cpmplted';
-                      
+
                       let allItemsChecked = false;
                       try {
                         const items = JSON.parse(order.items || '[]');
                         if (items.length > 0) {
                           allItemsChecked = items.every(item => item.availability === 'available' || item.availability === 'not_available');
                         }
-                      } catch(e) {
+                      } catch (e) {
                         allItemsChecked = false;
                       }
 
                       if (!isCompleted) {
                         return (
-                          <button 
-                            className="btn btn-success btn-sm" 
-                            onClick={() => handleOrderSubmit(order.id)} 
+                          <button
+                            className="btn btn-success btn-sm"
+                            onClick={() => handleOrderSubmit(order.id)}
                             disabled={!allItemsChecked}
                             title={!allItemsChecked ? "Please verify availability of all items before submitting" : ""}
-                            style={{ 
-                              width: '100%', 
-                              fontWeight: '700', 
-                              padding: '10px 16px', 
-                              borderRadius: '8px', 
-                              fontSize: '13px', 
-                              background: allItemsChecked ? 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)' : '#cbd5e1', 
-                              color: allItemsChecked ? 'white' : '#64748b', 
-                              border: 'none', 
-                              cursor: allItemsChecked ? 'pointer' : 'not-allowed', 
-                              boxShadow: allItemsChecked ? '0 4px 10px rgba(30, 58, 138, 0.2)' : 'none', 
-                              transition: 'all 0.2s' 
+                            style={{
+                              width: '100%',
+                              fontWeight: '700',
+                              padding: '10px 16px',
+                              borderRadius: '8px',
+                              fontSize: '13px',
+                              background: allItemsChecked ? 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)' : '#cbd5e1',
+                              color: allItemsChecked ? 'white' : '#64748b',
+                              border: 'none',
+                              cursor: allItemsChecked ? 'pointer' : 'not-allowed',
+                              boxShadow: allItemsChecked ? '0 4px 10px rgba(30, 58, 138, 0.2)' : 'none',
+                              transition: 'all 0.2s'
                             }}>
                             Order Submit
                           </button>
@@ -1857,23 +1857,23 @@ export default function AdminDashboard({ onLogout, adminUser }) {
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
               </div>
               <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b', marginBottom: '8px' }}>
-                {deleteConfirmModal.type === 'comboOffer' ? 'Delete Combo Offer?' : 
-                 deleteConfirmModal.type === 'menu' ? 'Delete Menu?' : 'Delete Content?'}
+                {deleteConfirmModal.type === 'comboOffer' ? 'Delete Combo Offer?' :
+                  deleteConfirmModal.type === 'menu' ? 'Delete Menu?' : 'Delete Content?'}
               </h3>
               <p style={{ color: '#64748b', fontSize: '15px', marginBottom: '24px' }}>
                 Are you sure you want to delete this item? This action cannot be undone.
               </p>
-              
+
               <div style={{ display: 'flex', gap: '12px' }}>
-                <button 
-                  className="btn btn-secondary" 
+                <button
+                  className="btn btn-secondary"
                   style={{ flex: 1, padding: '12px', fontSize: '15px', fontWeight: '600' }}
                   onClick={() => setDeleteConfirmModal({ isOpen: false, id: null, type: null })}
                 >
                   Cancel
                 </button>
-                <button 
-                  className="btn btn-danger" 
+                <button
+                  className="btn btn-danger"
                   style={{ flex: 1, padding: '12px', fontSize: '15px', fontWeight: '600', backgroundColor: '#ef4444', color: 'white', border: 'none' }}
                   onClick={confirmDelete}
                 >
