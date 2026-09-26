@@ -2,23 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, ShieldCheck, Truck, RefreshCw, Heart } from './Icons';
 
 export default function Hero({ setActiveView }) {
-  const slides = [
-    { type: 'video', src: 'https://vjs.zencdn.net/v/oceans.mp4' },
-    { type: 'image', src: '/home-image1.avif' },
-    { type: 'image', src: '/home-image2.jpeg' },
-    { type: 'image', src: '/home-image3.avif' },
-    { type: 'image', src: '/home-image4.jpeg' },
-    { type: 'image', src: '/home-image5.jpeg' },
-    { type: 'image', src: '/home-image6.jpg' },
-    { type: 'image', src: '/home-image7.jpeg' },
-    { type: 'image', src: '/home-image8.jpeg' },
+  const slideImages = [
+    '/home-image1.avif',
+    '/home-image2.jpeg',
+    '/home-image3.avif',
+    '/home-image4.jpeg',
+    '/home-image5.jpeg',
+    '/home-image6.jpg',
+    '/home-image7.jpeg',
+    '/home-image8.jpeg',
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((prev) => (prev + 1) % slideImages.length);
     }, 4000);
     return () => clearInterval(timer);
   }, []);
@@ -63,31 +62,18 @@ export default function Hero({ setActiveView }) {
           <div className="showcase-glow"></div>
           <div className="showcase-img-container">
             <div className="showcase-slide-wrapper">
-              {slides.map((slide, index) => (
-                slide.type === 'video' ? (
-                  <video
-                    key={slide.src}
-                    src={slide.src}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className={`showcase-slide ${index === currentSlide ? 'active' : ''}`}
-                    style={{ objectFit: 'cover' }}
-                  />
-                ) : (
-                  <img
-                    key={slide.src}
-                    src={slide.src}
-                    alt={`VALAM Foods Showcase ${index + 1}`}
-                    className={`showcase-slide ${index === currentSlide ? 'active' : ''}`}
-                  />
-                )
+              {slideImages.map((src, index) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt={`VALAM Foods Showcase ${index + 1}`}
+                  className={`showcase-slide ${index === currentSlide ? 'active' : ''}`}
+                />
               ))}
             </div>
             <span className="badge-overlay">100% Homemade</span>
             <div className="slide-dots">
-              {slides.map((_, index) => (
+              {slideImages.map((_, index) => (
                 <div
                   key={index}
                   className={`slide-dot ${index === currentSlide ? 'active' : ''}`}
