@@ -859,11 +859,6 @@ export default function AdminDashboard({ onLogout, adminUser }) {
             )}
           </button>
 
-          {/* Logout Button */}
-          <button className="logout-nav-btn" onClick={onLogout} title="Logout" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: '0', color: '#ef4444', border: '1px solid #fee2e2', backgroundColor: '#fef2f2', borderRadius: '50%', transition: 'all 0.2s', cursor: 'pointer' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-          </button>
-
           {/* Mobile Menu Toggle Button */}
           <button 
             className="admin-mobile-menu-btn" 
@@ -882,6 +877,11 @@ export default function AdminDashboard({ onLogout, adminUser }) {
                 <line x1="3" y1="18" x2="21" y2="18"></line>
               </svg>
             )}
+          </button>
+
+          {/* Logout Button */}
+          <button className="logout-nav-btn" onClick={onLogout} title="Logout" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: '0', color: '#ef4444', border: '1px solid #fee2e2', backgroundColor: '#fef2f2', borderRadius: '50%', transition: 'all 0.2s', cursor: 'pointer' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
           </button>
         </div>
       </div>
